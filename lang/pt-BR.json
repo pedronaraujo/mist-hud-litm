@@ -96,13 +96,12 @@
         "name": "Abrir / fechar o HUD do herói",
         "hint": "Abre o HUD do token selecionado, ou do seu personagem."
       },
-      "acornDice": {
-        "name": "Dados-bolota (Dice So Nice)",
-        "hint": "Registra o d6-bolota como conjunto de dados do Dice So Nice. Cada jogador pode escolhê-lo nas configurações do Dice So Nice."
-      },
-      "acornDiceDefault": {
-        "name": "Dados-bolota como aparência padrão",
-        "hint": "Jogadores novos começam com o d6-bolota nos dados comuns. Quem já salvou as configurações do Dice So Nice mantém a própria escolha."
+      "diceSet": {
+        "name": "Dice So Nice: dado de todo d6",
+        "hint": "Com qual dado 3D todo d6 é rolado, igual para todos os jogadores. \"Escolha de cada jogador\" mantém as configurações do Dice So Nice de cada um (os dois conjuntos aparecem lá).",
+        "acorn": "Bolotas (Mist HUD)",
+        "classic": "Dado clássico de Legend in the Mist (corpo de d12, corvo e Grandeza)",
+        "player": "Escolha de cada jogador"
       }
     },
     "notify": {
@@ -114,7 +113,8 @@
       "dropped": "{what} adicionado a {who}."
     },
     "dice": {
-      "systemName": "Legend in the Mist — Bolotas"
+      "acornName": "Legend in the Mist — Bolotas",
+      "classicName": "Legend in the Mist — Clássico"
     }
   }
 }

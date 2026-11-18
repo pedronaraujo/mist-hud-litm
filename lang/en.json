@@ -96,13 +96,12 @@
         "name": "Open / close the hero HUD",
         "hint": "Opens the HUD of the selected token, or your character."
       },
-      "acornDice": {
-        "name": "Acorn dice (Dice So Nice)",
-        "hint": "Registers the acorn d6 as a Dice So Nice dice set. Each player can pick it in the Dice So Nice settings."
-      },
-      "acornDiceDefault": {
-        "name": "Acorn dice as the default look",
-        "hint": "New players start with the acorn d6 for regular dice. Players who already saved their Dice So Nice settings keep their own choice."
+      "diceSet": {
+        "name": "Dice So Nice: dice for every d6",
+        "hint": "Which 3D dice every d6 is rolled with, the same for all players. \"Each player's choice\" keeps everyone's own Dice So Nice settings (both sets are listed there).",
+        "acorn": "Acorns (Mist HUD)",
+        "classic": "Classic Legend in the Mist die (d12 body, raven and Greatness)",
+        "player": "Each player's choice"
       }
     },
     "notify": {
@@ -114,7 +113,8 @@
       "dropped": "{what} added to {who}."
     },
     "dice": {
-      "systemName": "Legend in the Mist — Acorns"
+      "acornName": "Legend in the Mist — Acorns",
+      "classicName": "Legend in the Mist — Classic"
     }
   }
 }

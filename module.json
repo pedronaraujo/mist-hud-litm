@@ -2,7 +2,7 @@
   "id": "mist-hud-litm",
   "title": "Mist Engine HUD — Legend in the Mist",
   "description": "Always-open HUD for the official Legend in the Mist system (mist-engine-fvtt): select tags and statuses, mark a tag to burn and roll Quick, Detailed and Reaction actions or a Sacrifice through the system's own roll engine. Includes a Challenge HUD for the Narrator. Adapted from Mist Engine HUD by Gus and Snagov.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "authors": [
     {
       "name": "Pedro Tostes"
