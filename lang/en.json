@@ -1,0 +1,109 @@
+{
+  "MistHUD": {
+    "window": {
+      "playerHud": "Hero HUD",
+      "npcHud": "Challenge HUD"
+    },
+    "controls": {
+      "toggleHud": "Mist HUD: open / close the hero HUD"
+    },
+    "hud": {
+      "storyTheme": "Story theme",
+      "fellowship": "Fellowship",
+      "themeType": {
+        "Origin": "Origin",
+        "Adventure": "Adventure",
+        "Greatness": "Greatness",
+        "Default": "Variable"
+      },
+      "openSheet": "Open sheet",
+      "wideLayout": "Two-column layout",
+      "toggleMoves": "Actions / Sacrifice",
+      "overcome": "Overcome (a hindering status reached tier 5)",
+      "backpack": "Backpack",
+      "newBackpackTag": "New backpack tag",
+      "renameTag": "Rename tag",
+      "invertTag": "This roll only: make this tag hinder (or help again)",
+      "invertWeakness": "This roll only: this weakness helps instead of hindering",
+      "rotes": "Rotes",
+      "roteHint": "Click: use this rote's title as a tag. Double-click: open the rote.",
+      "storyTags": "Story tags",
+      "createTag": "Create tag",
+      "createTagHint": "Type a name. \"name-2\" creates a status; \"/sn name-2\" a hindering one.",
+      "togglePolarity": "Helps / hinders",
+      "statuses": "Statuses",
+      "createStatus": "Create status",
+      "editStatus": "Edit status",
+      "statusName": "Name",
+      "statusTier": "Tier",
+      "statusHelps": "Helps the hero",
+      "statusHint": "Click: helps (+) → hinders (−) → not used. Double-click: edit. Right-click: delete. Drag onto a token.",
+      "might": "Might",
+      "power": "Power {power}",
+      "powerTooltip": "Helping +{positive} · Hindering −{negative} · Modifiers {modifier}",
+      "sacrifice": "Sacrifice",
+      "sacrificeConfirm": "Roll a {level} Sacrifice (modifier {modifier})?",
+      "scratch": "Scratch / restore",
+      "createRelationship": "New relationship",
+      "companion": "Companion",
+      "relationshipTag": "Relationship tag",
+      "promises": "Promises",
+      "promisesHint": "Click a box to set the number of Promises",
+      "specialImprovements": "Special improvements",
+      "quintessences": "Quintessences",
+      "readyToImprove": "Ready to Improve: three Improve marks on this theme",
+      "delete": "Delete",
+      "deleteConfirm": "Delete \"{name}\"?",
+      "ok": "OK"
+    },
+    "tooltip": {
+      "improve": "Improve",
+      "abandon": "Abandon",
+      "milestone": "Milestone",
+      "quest": "Quest"
+    },
+    "npcHud": {
+      "difficulty": "Difficulty",
+      "overcome": "Overcome: a Limit has been reached",
+      "description": "Description",
+      "limitReached": "Limit reached",
+      "tagsStatuses": "Tags & Statuses",
+      "mighty": "Mighty aspects",
+      "specials": "Special features",
+      "threats": "Threats & Consequences",
+      "secrets": "Secrets"
+    },
+    "settings": {
+      "rollMode": {
+        "name": "Rolling from the HUD",
+        "hint": "Roll at once with the HUD selection, or open the system's roll dialog prefilled (to add help, Might or check the Power). Shift-click a move button for the other option.",
+        "direct": "Roll at once",
+        "dialog": "Open the system roll dialog"
+      },
+      "autoOpen": {
+        "name": "Open the HUD when selecting your hero's token",
+        "hint": "Selecting one of your hero tokens opens its HUD."
+      },
+      "npcHudOnTokenHud": {
+        "name": "Narrator: open the challenge HUD from the token HUD",
+        "hint": "Right-clicking a Challenge token opens its HUD."
+      },
+      "useTextButtons": {
+        "name": "Text move buttons",
+        "hint": "Show the action names instead of the illustrated buttons."
+      },
+      "keyToggle": {
+        "name": "Open / close the hero HUD",
+        "hint": "Opens the HUD of the selected token, or your character."
+      }
+    },
+    "notify": {
+      "systemLoadFailed": "Mist HUD (Legend in the Mist): could not load system file(s): {files}. The system may have changed; rolling from the HUD may not work.",
+      "rollApiUnavailable": "Mist HUD: the system's roll dialog is not available.",
+      "rollFailed": "Mist HUD: the roll failed ({error}).",
+      "noGM": "Mist HUD: a Narrator must be connected to do this.",
+      "noHero": "Mist HUD: select a hero token, or assign a character to your user.",
+      "dropped": "{what} added to {who}."
+    }
+  }
+}

@@ -1,0 +1,105 @@
+<div class="npc-hud mhl-npc {{#if isOvercome}}mhl-overcome{{/if}}">
+  <div class="npc-content">
+
+    <div class="mhl-npc-meta">
+      {{#if roles.length}}<span class="mhl-npc-roles">{{#each roles}}<span class="mhl-npc-role">{{this}}</span>{{/each}}</span>{{/if}}
+      <span class="mhl-npc-difficulty" data-tooltip="{{localize "MistHUD.npcHud.difficulty"}}">{{#times difficulty}}<i class="fa-solid fa-skull"></i>{{/times}}</span>
+    </div>
+
+    {{#if isOvercome}}
+      <div class="mhl-overcome-banner"><i class="fa-solid fa-flag-checkered"></i> {{localize "MistHUD.npcHud.overcome"}}</div>
+    {{/if}}
+
+    {{#if hasDescription}}
+    <div class="npc-description-biography accordion-container">
+      <div class="npc-subtitle-container-c accordion-header {{#unless descCollapsed}}active{{/unless}}">
+        <span class="npc-subtitle-text">{{localize "MistHUD.npcHud.description"}}</span>
+      </div>
+      <div class="accordion-content mhl-npc-description {{#unless descCollapsed}}active{{/unless}}" {{#if descCollapsed}}style="display:none"{{/if}}>{{{description}}}</div>
+    </div>
+    {{/if}}
+
+    {{#if limits.length}}
+    <ul class="npc-list limit">
+      {{#each limits}}
+        <li class="{{#if reached}}mhl-limit-reached{{/if}}">
+          <span class="npc-move-name limit">{{name}}</span> <span class="npc-spectrum-tier">{{value}}</span>
+          {{#if reached}}<i class="fa-solid fa-check" data-tooltip="{{localize "MistHUD.npcHud.limitReached"}}"></i>{{/if}}
+          {{#if consequence}}<span class="npc-move-description"> — {{{consequence}}}</span>{{/if}}
+        </li>
+      {{/each}}
+    </ul>
+    {{/if}}
+
+    <div class="npc-subtitle-container-c">
+      {{#if canEdit}}<div class="create-npc-tag" data-tooltip="{{localize "MistHUD.hud.createTag"}}"><i class="fa-solid fa-plus" style="font-size: small;"></i> <i class="fa-solid fa-tags"></i></div>{{/if}}
+      <div class="npc-subtitle-text">{{localize "MistHUD.npcHud.tagsStatuses"}}</div>
+      {{#if canEdit}}<div class="create-npc-status" data-tooltip="{{localize "MistHUD.hud.createStatus"}}"><i class="fa-solid fa-suitcase-medical"></i> <i class="fa-solid fa-plus" style="font-size: small;"></i></div>{{/if}}
+    </div>
+    <div class="npc-tags-statuses-container">
+      <ul class="npc-storytags-list">
+        {{#each tags}}
+          <div class="npc-story-tag {{#if selected}}selected{{/if}} {{#unless positive}}negative inverted{{/unless}} no-wrap"
+               data-index="{{index}}" data-drag-type="{{#if positive}}tag{{else}}weakness{{/if}}" data-name="{{name}}">
+            <span>{{name}}</span>
+          </div>
+        {{/each}}
+      </ul>
+      <ul class="npc-statuses-list">
+        {{#each statuses}}
+          <div>
+            <span class="npc-status {{#if selected}}selected {{#if positive}}positive{{else}}negative{{/if}}{{else}}neutral{{/if}}"
+                  data-index="{{index}}" data-name="{{name}}" data-tier="{{tier}}" data-positive="{{positive}}" data-drag-type="status">{{name}}-{{tier}}</span>
+          </div>
+        {{/each}}
+      </ul>
+    </div>
+
+    {{#if mighty.length}}
+    <div class="npc-subtitle-container-l"><div class="npc-subtitle-text">{{localize "MistHUD.npcHud.mighty"}}</div></div>
+    <ul class="npc-list">
+      {{#each mighty}}
+        <li><span class="mighty-icon mighty-{{icon}}-icn"></span> <span class="mighty-description">{{{aspect}}}</span></li>
+      {{/each}}
+    </ul>
+    {{/if}}
+
+    <div class="npc-moves-section">
+      {{#if specials.length}}
+        <div class="npc-subtitle-container-l"><div class="npc-subtitle-text">{{localize "MistHUD.npcHud.specials"}}</div></div>
+        <ul class="npc-list">
+          {{#each specials}}
+            <li><span class="npc-move-name">{{name}}</span>{{#if description}} - <span class="npc-move-description">{{{description}}}</span>{{/if}}</li>
+          {{/each}}
+        </ul>
+      {{/if}}
+
+      {{#if threats.length}}
+        <div class="npc-subtitle-container-l"><div class="npc-subtitle-text">{{localize "MistHUD.npcHud.threats"}}</div></div>
+        {{#each threats}}
+          <div class="npc-threat">
+            {{#if name}}<span class="npc-threat-name">{{name}}</span>{{/if}}
+            <span class="npc-threat-description">{{{description}}}</span>
+            <ul>
+              {{#each consequences}}
+                <li>
+                  <span class="npc-tc-marker npc-consequence-marker"><img src="{{@root.failIcon}}" alt="" draggable="false"></span>
+                  <span class="npc-move-description">{{{this}}}</span>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/each}}
+      {{/if}}
+
+      {{#if showSecrets}}{{#if secrets.length}}
+        <div class="npc-subtitle-container-l"><div class="npc-subtitle-text"><i class="fa-solid fa-user-secret"></i> {{localize "MistHUD.npcHud.secrets"}}</div></div>
+        <ul class="npc-list">
+          {{#each secrets}}
+            <li><span class="npc-move-name">{{name}}</span>{{#if description}} - <span class="npc-move-description">{{{description}}}</span>{{/if}}</li>
+          {{/each}}
+        </ul>
+      {{/if}}{{/if}}
+    </div>
+  </div>
+</div>

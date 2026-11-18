@@ -1,0 +1,213 @@
+<div class="mh-hud mhl-root{{#if isOvercome}} mhl-overcome{{/if}}">
+
+  {{!-- ── Roll Bar ── --}}
+  <div class="mh-roll-bar">
+    <div class="mh-roll-container" data-page="0" {{#if movePage}}style="display:none"{{/if}}>
+      {{#each rollButtons}}
+        {{#if useText}}
+          <button class="mh-roll-button" data-roll="{{key}}" data-tooltip="{{label}}"><div class="mh-roll-main">{{label}}</div></button>
+        {{else}}
+          <button class="mh-roll-button mh-roll-button-img" data-roll="{{key}}" data-tooltip="{{label}}"><img src="{{img}}" alt="{{label}}" class="mh-roll-img"></button>
+        {{/if}}
+      {{/each}}
+    </div>
+    <div class="mh-roll-container" data-page="1" {{#unless movePage}}style="display:none"{{/unless}}>
+      {{#each sacrificeButtons}}
+        {{#if useText}}
+          <button class="mh-roll-button" data-sacrifice="{{key}}" data-tooltip="{{label}}"><div class="mh-roll-main">{{label}}</div></button>
+        {{else}}
+          <button class="mh-roll-button mh-roll-button-img" data-sacrifice="{{key}}" data-tooltip="{{label}}"><img src="{{img}}" alt="{{label}}" class="mh-roll-img"></button>
+        {{/if}}
+      {{/each}}
+    </div>
+    <button class="mh-roll-toggle" data-tooltip="{{localize "MistHUD.hud.toggleMoves"}}">
+      <i class="fa-solid {{#if movePage}}fa-caret-down{{else}}fa-caret-up{{/if}}"></i>
+    </button>
+  </div>
+
+  {{#if isOvercome}}
+    <div class="mhl-overcome-banner"><i class="fa-solid fa-skull"></i> {{localize "MistHUD.hud.overcome"}}</div>
+  {{/if}}
+
+  {{!-- ── Main Content ── --}}
+  <div class="mh-content-container">
+    <div class="mh-content">
+
+      {{#each themes}}{{> mhlTheme this}}{{/each}}
+      {{#if fellowshipTheme}}{{> mhlTheme fellowshipTheme}}{{/if}}
+
+      {{!-- Backpack --}}
+      <div class="theme-container mh-loadout-container">
+        <div class="mh-theme-header neutral extras mh-title-container">
+          <div class="mh-title-container">
+            <span class="mh-theme-icon-notip loadout"></span>
+            <span class="mh-theme-name mh-theme-name-neutral">{{localize "MistHUD.hud.backpack"}}</span>
+          </div>
+          <a class="mh-create-backpack-tag" data-backpack="{{backpack.id}}" data-tooltip="{{localize "MistHUD.hud.newBackpackTag"}}"><i class="fa-regular fa-circle-plus"></i></a>
+        </div>
+        <ul class="mh-tags">
+          {{#each backpack.tags}}
+            <li class="mh-loadout-tag {{burnState}} {{#if selected}}selected{{/if}} {{#if inverted}}inverted{{/if}} {{#if expired}}mhl-expired{{/if}}"
+                data-backpack="{{../backpack.id}}" data-index="{{index}}" data-drag-type="tag" data-name="{{name}}">
+              <span class="mh-burn-toggle burn-icon {{burnState}}"></span>
+              <span class="mh-tag-text">{{name}}{{#if expiring}} <i class="fa-regular fa-hourglass-half"></i>{{/if}}</span>
+              <span class="mh-invert-toggle mh-story-toggle clickable" data-key="{{key}}" data-tooltip="{{localize "MistHUD.hud.invertTag"}}">
+                {{#if inverted}}<i class="fa-light fa-angles-down"></i>{{else}}<i class="fa-light fa-angles-up"></i>{{/if}}
+              </span>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      {{!-- Rotes --}}
+      {{#if rotes.length}}
+      <div class="theme-container mhl-rotes-container">
+        <div class="mh-theme-header neutral extras mh-title-container">
+          <div class="mh-title-container">
+            <i class="fa-solid fa-scroll mhl-header-icon"></i>
+            <span class="mh-theme-name mh-theme-name-neutral">{{localize "MistHUD.hud.rotes"}}</span>
+          </div>
+        </div>
+        <ul class="mh-tags">
+          {{#each rotes}}
+            <li class="mh-story-tag mh-rote {{#if selected}}selected{{/if}}" data-item-id="{{id}}" data-tooltip="{{localize "MistHUD.hud.roteHint"}}">
+              <span class="mhl-rote-icon"><i class="fa-solid fa-scroll"></i></span>
+              <span class="mh-tag-text">{{name}}</span>
+              <span></span>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      {{!-- Story tags on the hero --}}
+      <div class="mh-story-tags-container">
+        <div class="mh-theme-header neutral extras mh-title-container">
+          <div class="mh-title-container">
+            <span class="mh-theme-icon-notip storytag"></span>
+            <span class="mh-theme-name mh-theme-name-neutral">{{localize "MistHUD.hud.storyTags"}}</span>
+          </div>
+          <a class="mh-create-story-tag" data-tooltip="{{localize "MistHUD.hud.createTag"}}"><i class="fa-regular fa-circle-plus"></i></a>
+        </div>
+        <ul class="mh-tags">
+          {{#each storyTags}}
+            <li class="mh-story-tag {{#unless positive}}inverted{{/unless}} {{#if selected}}selected{{/if}}"
+                data-floating="1" data-index="{{index}}" data-drag-type="{{#if positive}}tag{{else}}weakness{{/if}}" data-name="{{name}}">
+              <span class="mhl-tag-bullet"><i class="fa-solid fa-tag"></i></span>
+              <span class="mh-tag-text">{{name}}</span>
+              <span class="mh-story-toggle clickable" data-tooltip="{{localize "MistHUD.hud.togglePolarity"}}">
+                {{#if positive}}<i class="fa-light fa-angles-up"></i>{{else}}<i class="fa-light fa-angles-down"></i>{{/if}}
+              </span>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      {{!-- Statuses --}}
+      <div class="mh-statuses-container">
+        <div class="mh-theme-header neutral extras mh-title-container">
+          <div class="mh-title-container">
+            <span class="mh-theme-icon-notip statuses"></span>
+            <span class="mh-theme-name mh-theme-name-neutral">{{localize "MistHUD.hud.statuses"}}</span>
+          </div>
+          <a class="mh-create-status" data-tooltip="{{localize "MistHUD.hud.createStatus"}}"><i class="fa-regular fa-circle-plus"></i></a>
+        </div>
+        <div class="mh-statuses-list">
+          {{#each statuses}}
+            <div class="mh-status {{statusType}} {{#unless positive}}mhl-hinders{{/unless}} {{#if selected}}selected{{/if}}"
+                 data-index="{{index}}" data-name="{{name}}" data-tier="{{tier}}" data-positive="{{positive}}"
+                 data-drag-type="status" data-tooltip="{{localize "MistHUD.hud.statusHint"}}">
+              {{name}}-{{tier}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {{!-- ── Footer ── --}}
+  <div class="mh-footer">
+    <div class="mh-modifier-bar">
+      <div id="mh-mod-decrease" class="mh-mod-button">-</div>
+      <input type="text" id="mh-mod-value" value="{{modifier}}" />
+      <div id="mh-mod-increase" class="mh-mod-button">+</div>
+      <span class="mh-power-indicator"></span>
+    </div>
+    {{#if mightEnabled}}
+    <div class="mhl-might">
+      <span class="mhl-might-label">{{localize "MistHUD.hud.might"}}</span>
+      {{#each mightOptions}}
+        <label><input type="radio" name="mhl-might" value="{{value}}" {{#if checked}}checked{{/if}}>{{label}}</label>
+      {{/each}}
+    </div>
+    {{/if}}
+  </div>
+
+  {{!-- ── Sliding Panel ── --}}
+  <div class="mh-sliding-panel {{#if panelOpen}}open{{/if}}">
+    <div class="mh-panel-ear">❯</div>
+    <div class="mh-panel-content">
+
+      <div class="section mh-relationships">
+        <div class="mh-theme-name title-effect mh-title-container">
+          <div><i class="fa-solid fa-users"></i> {{localize "MistHUD.hud.fellowship"}}</div>
+          <a class="mh-create-relationship" data-tooltip="{{localize "MistHUD.hud.createRelationship"}}"><i class="fas fa-plus"></i></a>
+        </div>
+        <ul class="mh-tags">
+          {{#each relationships}}
+            <li class="mh-story-tag mh-relationship-tag {{#if scratched}}burned{{/if}} {{#if selected}}selected{{/if}}" data-index="{{index}}">
+              <span class="mh-burn-toggle burn-icon {{#if scratched}}burned{{else}}unburned{{/if}}" data-tooltip="{{localize "MistHUD.hud.scratch"}}"></span>
+              <span class="mh-tag-text">
+                {{#if companion}}<span class="mh-relationship-who">{{companion}}</span>{{/if}}
+                {{name}}
+              </span>
+              <span></span>
+            </li>
+          {{/each}}
+        </ul>
+        <div class="mhl-promises" data-tooltip="{{localize "MistHUD.hud.promisesHint"}}">
+          <span class="mhl-promises-label">{{localize "MistHUD.hud.promises"}}</span>
+          {{#each promiseBoxes}}
+            <span class="mh-promise {{#if this}}active{{/if}}" data-index="{{@index}}"><i class="{{#if this}}fa-solid{{else}}fa-regular{{/if}} fa-handshake"></i></span>
+          {{/each}}
+        </div>
+      </div>
+      <hr class="panel-divider" />
+
+      {{#if improvements.length}}
+      <div class="section improvements">
+        <div class="mh-theme-name title-effect"><i class="fa-light fa-star"></i> {{localize "MistHUD.hud.specialImprovements"}}</div>
+        {{#each improvements}}
+          <div class="theme-container">
+            <div class="mh-theme-name mh-title-container mh-improvement-theme">
+              <div class="theme-type {{category}}">{{name}}</div>
+            </div>
+            {{#each specials}}
+              <div class="improvement-container">
+                <span class="item-name"><i class="fa-solid fa-star mh-improvement-star"></i> <span>{{name}}</span></span>
+                {{#if description}}<div class="item-description">{{description}}</div>{{/if}}
+              </div>
+            {{/each}}
+          </div>
+        {{/each}}
+      </div>
+      <hr class="panel-divider" />
+      {{/if}}
+
+      {{#if quintessences.length}}
+      <div class="section mhl-quintessences">
+        <div class="mh-theme-name title-effect"><i class="fa-solid fa-gem"></i> {{localize "MistHUD.hud.quintessences"}}</div>
+        {{#each quintessences}}
+          <div class="improvement-container">
+            <span class="item-name">{{name}}</span>
+            {{#if description}}<div class="item-description">{{{description}}}</div>{{/if}}
+          </div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+    </div>
+  </div>
+
+</div>

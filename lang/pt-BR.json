@@ -1,0 +1,109 @@
+{
+  "MistHUD": {
+    "window": {
+      "playerHud": "HUD do Herói",
+      "npcHud": "HUD do Desafio"
+    },
+    "controls": {
+      "toggleHud": "Mist HUD: abrir / fechar o HUD do herói"
+    },
+    "hud": {
+      "storyTheme": "Tema de história",
+      "fellowship": "Sociedade",
+      "themeType": {
+        "Origin": "Origem",
+        "Adventure": "Aventura",
+        "Greatness": "Grandeza",
+        "Default": "Variável"
+      },
+      "openSheet": "Abrir ficha",
+      "wideLayout": "Layout em duas colunas",
+      "toggleMoves": "Ações / Sacrifício",
+      "overcome": "Superado (um status que atrapalha chegou ao nível 5)",
+      "backpack": "Mochila",
+      "newBackpackTag": "Nova tag da mochila",
+      "renameTag": "Renomear tag",
+      "invertTag": "Só nesta rolagem: esta tag atrapalha (ou volta a ajudar)",
+      "invertWeakness": "Só nesta rolagem: esta fraqueza ajuda em vez de atrapalhar",
+      "rotes": "Rotinas",
+      "roteHint": "Clique: usar o título da rotina como tag. Duplo clique: abrir a rotina.",
+      "storyTags": "Tags de história",
+      "createTag": "Criar tag",
+      "createTagHint": "Digite um nome. \"nome-2\" cria um status; \"/sn nome-2\" um status que atrapalha.",
+      "togglePolarity": "Ajuda / atrapalha",
+      "statuses": "Status",
+      "createStatus": "Criar status",
+      "editStatus": "Editar status",
+      "statusName": "Nome",
+      "statusTier": "Nível",
+      "statusHelps": "Ajuda o herói",
+      "statusHint": "Clique: ajuda (+) → atrapalha (−) → não usado. Duplo clique: editar. Botão direito: apagar. Arraste para um token.",
+      "might": "Poderio",
+      "power": "Poder {power}",
+      "powerTooltip": "A favor +{positive} · Contra −{negative} · Modificadores {modifier}",
+      "sacrifice": "Sacrifício",
+      "sacrificeConfirm": "Rolar um Sacrifício {level} (modificador {modifier})?",
+      "scratch": "Riscar / restaurar",
+      "createRelationship": "Nova relação",
+      "companion": "Companheiro",
+      "relationshipTag": "Tag de relação",
+      "promises": "Promessas",
+      "promisesHint": "Clique numa caixa para definir o número de Promessas",
+      "specialImprovements": "Melhorias especiais",
+      "quintessences": "Quintessências",
+      "readyToImprove": "Pronto para Melhorar: três marcas de Melhoria neste tema",
+      "delete": "Apagar",
+      "deleteConfirm": "Apagar \"{name}\"?",
+      "ok": "OK"
+    },
+    "tooltip": {
+      "improve": "Melhoria",
+      "abandon": "Abandono",
+      "milestone": "Marco",
+      "quest": "Busca"
+    },
+    "npcHud": {
+      "difficulty": "Dificuldade",
+      "overcome": "Superado: um Limite foi atingido",
+      "description": "Descrição",
+      "limitReached": "Limite atingido",
+      "tagsStatuses": "Tags e Status",
+      "mighty": "Aspectos poderosos",
+      "specials": "Características especiais",
+      "threats": "Ameaças e Consequências",
+      "secrets": "Segredos"
+    },
+    "settings": {
+      "rollMode": {
+        "name": "Rolagem pelo HUD",
+        "hint": "Rolar na hora com a seleção do HUD, ou abrir o diálogo de rolagem do sistema já preenchido (para pedir ajuda, usar Poderio ou conferir o Poder). Shift+clique num botão de ação usa a outra opção.",
+        "direct": "Rolar na hora",
+        "dialog": "Abrir o diálogo de rolagem do sistema"
+      },
+      "autoOpen": {
+        "name": "Abrir o HUD ao selecionar o token do seu herói",
+        "hint": "Selecionar um token de herói seu abre o HUD dele."
+      },
+      "npcHudOnTokenHud": {
+        "name": "Narrador: abrir o HUD do desafio pelo HUD do token",
+        "hint": "Clicar com o botão direito num token de Desafio abre o HUD dele."
+      },
+      "useTextButtons": {
+        "name": "Botões de ação em texto",
+        "hint": "Mostra o nome das ações em vez dos botões ilustrados."
+      },
+      "keyToggle": {
+        "name": "Abrir / fechar o HUD do herói",
+        "hint": "Abre o HUD do token selecionado, ou do seu personagem."
+      }
+    },
+    "notify": {
+      "systemLoadFailed": "Mist HUD (Legend in the Mist): não foi possível carregar arquivo(s) do sistema: {files}. O sistema pode ter mudado; rolar pelo HUD pode não funcionar.",
+      "rollApiUnavailable": "Mist HUD: o diálogo de rolagem do sistema não está disponível.",
+      "rollFailed": "Mist HUD: a rolagem falhou ({error}).",
+      "noGM": "Mist HUD: é preciso um Narrador conectado para isso.",
+      "noHero": "Mist HUD: selecione um token de herói ou atribua um personagem ao seu usuário.",
+      "dropped": "{what} adicionado a {who}."
+    }
+  }
+}

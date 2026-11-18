@@ -1,0 +1,65 @@
+{
+  "id": "mist-hud-litm",
+  "title": "Mist Engine HUD — Legend in the Mist",
+  "description": "Always-open HUD for the official Legend in the Mist system (mist-engine-fvtt): select tags and statuses, mark a tag to burn and roll Quick, Detailed and Reaction actions or a Sacrifice through the system's own roll engine. Includes a Challenge HUD for the Narrator. Adapted from Mist Engine HUD by Gus and Snagov.",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Pedro Tostes"
+    },
+    {
+      "name": "Gus (Mist Engine HUD)"
+    },
+    {
+      "name": "Snagov (Mist Engine HUD)"
+    }
+  ],
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "mist-engine-fvtt",
+        "type": "system",
+        "compatibility": {
+          "minimum": "14.5.0"
+        }
+      }
+    ],
+    "recommends": [
+      {
+        "id": "dice-so-nice",
+        "type": "module"
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/init.js"
+  ],
+  "styles": [
+    "styles/mist-hud.css",
+    "styles/mh-npc-hud.css",
+    "styles/mh-litm.css",
+    "styles/mhl-extra.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    }
+  ],
+  "socket": true,
+  "license": "LICENSE",
+  "url": "https://github.com/pedronaraujo/mist-hud-litm",
+  "manifest": "https://raw.githubusercontent.com/pedronaraujo/mist-hud-litm/main/module.json",
+  "download": "https://raw.githubusercontent.com/pedronaraujo/mist-hud-litm/main/dist/mist-hud-litm.zip",
+  "bugs": "https://github.com/pedronaraujo/mist-hud-litm/issues"
+}

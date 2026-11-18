@@ -1,0 +1,44 @@
+<div class="mh-tooltip-theme mhl-tooltip-theme" data-theme-id="{{id}}">
+  <div class="mh-tooltip-header">
+    <div class="mh-tooltip-title">
+      <div class="mh-theme-name mh-theme-name-com-{{category}}">{{name}} <span class="mhl-tooltip-type">· {{typeLabel}}</span></div>
+      <div class="mh-resource-bar">
+        <div class="mh-resource-group attention-group">
+          <div class="boxes">
+            {{#each improveTrack}}<span class="mh-box attention {{#if this}}active{{/if}}" data-track="improve" data-index="{{@index}}"></span>{{/each}}
+          </div>
+          <div class="mh-resource-label">{{localize "MistHUD.tooltip.improve"}}</div>
+        </div>
+        <div class="mh-resource-group crack-group">
+          <div class="boxes">
+            {{#each abandonTrack}}<span class="mh-box crack {{#if this}}active{{/if}}" data-track="abandon" data-index="{{@index}}"></span>{{/each}}
+          </div>
+          <div class="mh-resource-label">{{localize "MistHUD.tooltip.abandon"}}</div>
+        </div>
+        <div class="mh-resource-group milestone-group">
+          <div class="boxes">
+            {{#each milestoneTrack}}<span class="mh-box milestone {{#if this}}active{{/if}}" data-track="milestone" data-index="{{@index}}"></span>{{/each}}
+          </div>
+          <div class="mh-resource-label">{{localize "MistHUD.tooltip.milestone"}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{#if readyToImprove}}
+    <div class="mhl-tooltip-note"><i class="fa-solid fa-star"></i> {{localize "MistHUD.hud.readyToImprove"}}</div>
+  {{/if}}
+
+  {{#if quest}}
+    <hr class="mh-divider">
+    <span class="mystery-type {{category}}">{{localize "MistHUD.tooltip.quest"}}:</span>
+    <span class="mystery-text">{{quest}}</span>
+  {{/if}}
+
+  {{#if specials.length}}
+    <hr class="mh-divider">
+    {{#each specials}}
+      <div class="mhl-tooltip-special"><i class="fa-solid fa-star"></i> <strong>{{name}}</strong>{{#if description}}: {{description}}{{/if}}</div>
+    {{/each}}
+  {{/if}}
+</div>

@@ -1,0 +1,1458 @@
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  /* Global Colors */
+  --mythos-dark-color:#b90ded;
+  --mythos-light-color:#dbafe9;
+  --mythos-verylight-color:#fdf7ff;
+  --filter-mythos: invert(92%) sepia(5%) saturate(1197%) hue-rotate(247deg) brightness(107%) contrast(97%);
+  --logos-dark-color: #b05d33;
+  --logos-light-color: #d7d4c1;
+  --logos-verylight-color: #faf8eb;
+  --filter-logos: invert(99%) sepia(1%) saturate(6005%) hue-rotate(318deg) brightness(105%) contrast(68%);
+  --mist-dark-color: #466a81;
+  --mist-light-color: #93a5b9;
+  --mist-verylight-color: #d7e5f5;
+  --filter-mist: invert(97%) sepia(3%) saturate(3929%) hue-rotate(175deg) brightness(96%) contrast(102%);
+  --self-dark-color: #f7106e;
+  --self-light-color: #9d2a5d;
+  --self-verylight-color: #fff0f9;
+  --mythosOS-dark-color:#9833f2;
+  --mythosOS-light-color:#c160e8;
+  --mythosOS-verylight-color:#f8f0ff;
+  --noise-dark-color: #04e6fb;
+  --noise-light-color: #0079a6;
+  --noise-verylight-color: #f4feff;
+}
+
+#hotbar .macro .macro-key{
+  background: none;
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+/* Main HUD container */
+#mist-hud {
+  position: absolute;
+  z-index: 2;
+  border: 1px solid var(--mist-border-color);
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  color: white;
+  min-width: 250px;
+  max-width: 300px !important;
+  min-height: 500px;
+  max-height: calc(100vh - 150px);
+  overflow: visible !important;
+}
+
+#mist-hud .window-app {
+padding: 0;
+margin: 0;
+list-style: none;
+color: #00000000;
+background: none;
+border: none;
+}
+
+#mist-hud .app {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: #00000000;
+  background: none;
+  border: none;
+}
+
+
+/* ApplicationV2 clips its frame; the portrait and roll bar float outside it */
+#mist-hud.application,
+#mist-hud .window-header {
+  overflow: visible !important;
+  contain: none !important;
+}
+
+/* Customize the Foundry header */
+#mist-hud .window-header {
+  background: var(--hud-bg-color);
+  display: flex;
+  flex-basis: 35px;
+  flex-direction: row;
+  justify-content:center;
+  align-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid white;
+  cursor: grab;
+  border-radius: 0 8px 0 0;
+  padding-left: 30px;
+}
+
+#mist-hud ul {
+  padding: 3px;
+  margin: 0;
+  list-style: none;
+  color: #00000000;
+  background: none;
+  border: none;
+}
+
+/* Token image */
+.mh-token-image {
+  position: absolute; /* Allow positioning relative to the header */
+  top: -25px; /* Adjust to float above the header */
+  left: -25px; /* Position it horizontally relative to the header */
+  width: 60px; /* Adjust image size */
+  border: 2px solid whitesmoke;
+  height: 60px; /* Match the width for a circular image */
+  border-radius: 50%; /* Make the image circular */
+  overflow: hidden; /* Crop overflowing parts of the image */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5); /* Add a floating effect */
+  z-index: 3; /* Ensure it appears above other elements */
+  transition: ease-in, top, 0.2s;
+}
+
+#mist-hud.minimized .mh-token-image {
+  top: -13px;
+  transition: ease-in, top, 0.2s;
+}
+
+.mh-token-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
+
+/* Character name */
+#mist-hud .mh-char-name {
+  font-size: 1.4rem;
+  font-family: var(--font-family-move);
+  filter: drop-shadow(1px 2px 3px var(--mythos-dark-color));
+  align-self: flex-start;
+  margin-left: 12px; /* header padding already clears the portrait */
+  flex: 2;
+  padding-top: 3px;
+}
+
+#mist-hud.minimized .mh-char-name {
+  margin-left: 0px;
+}
+
+/* Header order: name first, native controls (⋮ / minimize / close) at the right */
+#mist-hud .window-header .mh-char-name { order: 0; }
+#mist-hud .window-header .header-control,
+#mist-hud .window-header .window-icon { order: 1; flex: 0 0 auto; }
+#mist-hud .window-header .header-control { color: #fff; }
+#mist-hud .window-header .mh-wide-toggle.active { color: var(--color-warm-1, #ff6400); }
+
+/* Wide layout (header toggle, player-hud.js _applyWideLayout): two columns of
+   the normal one-column width — themes in pairs, then loadout | story tags,
+   statuses across both. The grid lives inside .mh-content-container, so there
+   is still a single scrollbar for the whole content. */
+#mist-hud.mh-wide {
+  min-width: 500px;
+  max-width: 600px !important;
+}
+
+#mist-hud.mh-wide .mh-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  column-gap: 4px;
+}
+
+#mist-hud.mh-wide .mh-content > .mh-statuses-container {
+  grid-column: 1 / -1;
+}
+
+/* Themes (any count, extra themes included) fill the rows in pairs; the
+   loadout always starts a new row in column 1, so an odd last theme leaves
+   its partner cell empty instead of pushing loadout | tags out of line. */
+#mist-hud.mh-wide .mh-content > .mh-loadout-container {
+  grid-column: 1;
+}
+
+/* No loadout (City of Mist): the story tags take the whole row */
+#mist-hud.mh-wide .mh-content > .mh-story-tags-wide {
+  grid-column: 1 / -1;
+}
+
+/* Collapse Buttons */
+#mist-hud .mh-collapse-button {
+  font-size: 1.2rem;
+  color: #ffffff;
+  cursor: pointer;
+  margin-left: auto;
+  flex: 1;
+}
+
+#mist-hud .mh-collapse-button:hover{
+  opacity: 0.8;
+}
+
+/* Close Buttons */
+#mist-hud .mh-close-button {
+  font-size: 1.2rem;
+  color: #ffffff;
+  cursor: pointer;
+  margin: auto;
+  flex: 0;
+  padding-top: 0px;
+  margin-left: 5px;
+}
+
+#mist-hud .mh-close-button:hover {
+  opacity: 0.8;
+}
+
+/* Main Content Area */
+#mist-hud .window-content {
+  padding: 0;
+  margin: 0;
+  margin-top: 3px;
+  list-style: none;
+  color: #00000000;
+  background: var(--hud-bg-color);
+  border: none;
+  border-radius: 8px;
+  overflow: visible !important;
+}
+
+#mist-hud .mh-content {
+overflow: visible !important;
+}
+
+.window-app.minimized .mh-custom-header > * {
+  display: block !important; /* Ensure all elements remain visible */
+}
+
+#mist-hud.minimized .window-content {
+  display: none !important;
+}
+
+/* The 500px min-height must not survive minimizing, or an empty frame stays behind */
+#mist-hud.minimized {
+  min-height: 0 !important;
+  height: auto !important;
+  background: none !important;
+  box-shadow: none;
+  border: none;
+}
+
+.mist-hud.collapsed .window-content {
+  display: none;
+}
+
+/* Minimized state header */
+#mist-hud.minimized .window-header {
+  height: 50px;
+  overflow: visible; /* Allow overflow */
+  min-width: fit-content;
+  padding-left: 40px;
+}
+
+
+/* Horizontal Rule */
+hr {
+  border: none;
+  border-top: 1px solid #444;
+  margin: 5px 10px;
+}
+
+/* General umbrella class for all theme icons */
+.mh-theme-icon,
+.mh-theme-icon-notip {
+  display: inline-block;
+  margin-right: 3px;
+  margin-top: 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  align-self: flex-start;
+}
+
+/* Theme Section */
+.mh-theme {
+  font-family: var(--font-family-main2);
+}
+
+
+.mh-themebook-name {
+  font-family: var(--font-family-main2);
+  font-style: italic;
+  white-space: nowrap;
+  font-size: 1.0em;
+}
+
+/* Tags */
+
+.mh-story-tags-title{
+  font-family: var(--font-family-move);
+  font-size: 1.2em;
+  color: whitesmoke;
+  text-shadow: 1px 1px 1px var(--mythos-dark-color);
+  padding-left: 5px;
+}
+
+.mh-tag-text i {
+  font-size: 0.75em;
+  align-self: center;
+  padding: 3px 2px 0 6px;
+}
+
+.mh-power-subtag,
+.mh-loadout-subtag {
+  display: flex;
+  align-items: center;
+  margin: 2px 0;
+  padding-left: 15px;
+}
+
+.mh-story-invert-toggle {
+  padding-left: 5px;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.mh-story-tag .mh-story-invert-toggle i {
+  font-size: 0.75em;
+}
+
+.mh-story-tag .mh-story-invert-toggle:hover {
+  opacity: 0.8;
+}
+
+.mh-story-tag.inverted .mh-story-invert-toggle {
+  color: red;
+  font-weight: bold;
+  /* text-shadow: rgb(255, 208, 204) 1px 1px; */
+}
+
+
+/* Statuses */
+.mh-statuses-container {
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+.mh-statuses-title {
+  font-family: var(--font-family-move);
+  font-size: 1.2em;
+  text-shadow: 1px 1px 1px var(--mythos-dark-color);
+  padding-left: 5px;
+  color: whitesmoke;
+}
+
+.mh-statuses-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  align-items: center;
+  padding: 3px;
+}
+
+.mh-statuses-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.mh-status {
+  margin: 2px;
+  padding: 2px 4px;
+  border-radius: 2px;
+  font-size: 1.1em;
+  cursor: pointer;
+  font-family: var(--font-family-tags);
+  align-content: center;
+  line-height: 15px;
+  text-transform: lowercase;
+  font-style: italic;
+}
+
+.mh-status i{
+  font-size: 0.75em;
+}
+
+/* Status Types */
+.mh-status.neutral {
+  background: none;
+  border: 1px solid rgb(200, 200, 200);
+  color: var(--text-hud-main-color);
+}
+
+.mh-status.negative {
+  background: var(--negative-tag-borderColor);
+  border: 1px solid var(--negative-tag-color);
+  color: black;
+}
+
+.mh-status.positive {
+  background: var(--positive-tag-borderColor);
+  border: 1px solid var(--positive-tag-color);
+  color: black;
+}
+
+/* Modifiers */
+.mh-modifiers {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.mh-modifier-bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 5px;
+  border-top: 1px solid #ccc;
+  background-color: #222;
+  height: 28px;
+  width: 100%;
+  z-index: 10;
+}
+
+.mh-mod-button,
+#mh-mod-value {
+  height: 25px;
+  flex: 1; /* Makes all elements take equal space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 16px;
+  color: whitesmoke;
+}
+
+.mh-mod-button {
+  padding: 0;
+  cursor: pointer;
+}
+
+.mh-mod-button:hover {
+  background-color: #e0e0e038;
+}
+
+.mh-mod-button:active {
+  background-color: #d0d0d052;
+}
+
+#mh-mod-value {
+  border: none;
+  color: white;
+  filter: drop-shadow(1px 2px 3px var(--mythosOS-dark-color));
+}
+
+/* Scrollbars: thumb in the active system's spectrum colour (each system
+   stylesheet sets --spectrum-color), on every module window and popup. */
+:is(.mh-hud, .npc-hud, .status-screen, .npc-influence-manager, .mh-loadout-popup),
+:is(.mh-hud, .npc-hud, .status-screen, .npc-influence-manager, .mh-loadout-popup) * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color, var(--spectrum-color, #888)) transparent;
+}
+
+/* Text Wrapping */
+.mh-power-tag,
+.mh-weakness-tag,
+.mh-loadout-tag,
+.mh-story-tag,
+.mh-status {
+  word-wrap: break-word;
+}
+
+/* MYSTERY /  TOOLTIP */
+
+.mh-tooltip {
+  position: fixed; 
+  z-index: 150;
+  background: rgba(0, 0, 0, 0.85); 
+  color: whitesmoke;
+  padding: 2px 5px;
+  border: 1px solid whitesmoke;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(80, 52, 97, 0.5); 
+  pointer-events: auto; 
+}
+
+.mystery-type {
+  font-weight: bolder;
+  font-size: 0.9em;
+}
+
+.mystery-text {
+  font-size: 0.85em;  
+  font-style: italic;
+  margin-left: 3px;
+  word-wrap: break-word;
+}
+
+.mh-tooltip-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.mh-tooltip-theme {
+  position: relative;
+  padding: 5px; /* Adjust as needed */
+  max-width: 300px;
+}
+
+.mh-resource-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the boxes and label horizontally */
+}
+
+.mh-resource-group .boxes {
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+}
+
+.mh-box {
+  width: 10px;
+  height: 10px;
+}
+
+.mh-box.active {
+  width: 10px;
+  height: 10px;
+}
+
+/* Sliding Panel Wrapper */
+.mh-sliding-panel {
+  position: absolute;
+  top: 34px; /* Align below the HUD header */
+  right: 0; /* Panel starts aligned to the right */
+  height: calc(100% - 64px);
+  width: 250px;
+  background-color: none; /* Transparent when closed */
+  /* border-left: 1px solid var(--mist-border-color); */
+  border-radius: 0 0 8px 0;
+  z-index: -1; /* Ensure it's above other elements when open */
+  transform: translateX(0); /* Panel hidden to the right when closed */
+  transition: transform 0.3s ease-in-out, background-color 0.5s ease-in-out;
+  overflow: visible; /* Allow ear to appear outside */
+  padding: 5px;
+}
+
+/* Open State */
+.mh-sliding-panel.open {
+  transform: translateX(100%); /* Slide into view */
+  background-color: rgba(0, 0, 0, 0.8); /* Opaque when open */
+  box-shadow: 0 0 10px rgb(0, 0, 0);
+  /* border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  border-color: whitesmoke; */
+}
+
+/* Panel Ear */
+.mh-panel-ear {
+  position: absolute;
+  top: 0; /* Adjust as needed */
+  right: -30px; /* Position it outside the panel on the right */
+  width: 30px;
+  height: 30px;
+  background-color: var(--hud-bg-color);
+  border-radius: 0 6px 6px 0; /* Rounded edges */
+  text-align: center;
+  line-height: 30px;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  z-index: 20; /* Higher than panel to stay on top */
+  transition: background-color 0.3s ease-in-out;
+  /* border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  border-color: whitesmoke; */
+}
+
+/* Rotate the ear icon when open */
+.mh-sliding-panel.open .mh-panel-ear {
+  transform: rotate(180deg); /* Rotate the arrow */
+  border-radius: 6px 0 0 6px; /* Rounded edges */
+}
+
+/* Count of relationship tags selected inside the panel, so a selection made
+   there is still visible on the ear once the panel is closed */
+.mh-panel-badge {
+  display: none;
+  position: absolute;
+  top: -6px;
+  right: -36px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background: whitesmoke;
+  color: #111;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 16px;
+  text-align: center;
+  z-index: 21;
+  pointer-events: none;
+}
+
+.mh-panel-badge.visible {
+  display: block;
+}
+
+.mh-sliding-panel.open .mh-panel-badge {
+  display: none;
+}
+
+/* Relationship tags (side panel) */
+.mh-panel-content .mh-relationship-tag {
+  color: whitesmoke; /* the panel is dark in every system */
+  margin-bottom: 4px;
+}
+
+.mh-panel-content .mh-relationship-tag.burned .mh-tag-text {
+  color: #9aa5a8;
+  text-decoration-color: #9aa5a8;
+}
+
+.mh-relationship-tag .mh-tag-text {
+  display: block;
+  min-width: 0;
+  word-wrap: break-word;
+}
+
+/* Who the relationship is with: small portrait + name above the tag text */
+.mh-relationship-who {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-family-main2);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.3;
+  text-transform: none;
+  text-decoration: none;
+  color: #b4b9c0;
+}
+
+.mh-relationship-who img,
+.mh-relationship-slot img {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+/* A crew member with no relationship tag yet */
+.mh-relationship-slot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 2px 0;
+  padding: 3px 6px;
+  border: 1px dashed #666;
+  border-radius: 4px;
+  color: #b4b9c0;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.mh-relationship-slot:hover {
+  border-color: whitesmoke;
+  color: whitesmoke;
+}
+
+.mh-relationship-slot img {
+  width: 22px;
+  height: 22px;
+  opacity: 0.7;
+}
+
+/* Ear Hover Effect */
+.mh-panel-ear:hover {
+  background-color: var(--mist-light-color);
+}
+
+/* Panel Content */
+.mh-panel-content {
+  padding: 5px;
+  opacity: 0; /* Invisible when closed */
+  transition: opacity 0.4s ease-in-out;
+  pointer-events: none; /* Prevent interaction when invisible */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  max-height: 100%; /* Ensure the panel content respects the container height */
+  box-sizing: border-box; /* Include padding in the element's height calculation */
+}
+
+/* Open State Content */
+.mh-sliding-panel.open .mh-panel-content {
+  opacity: 1; /* Fully visible when open */
+  pointer-events: auto; /* Enable interaction */
+  color: whitesmoke;
+}
+
+/* Section Titles */
+
+/* Divider */
+.panel-divider {
+  border: 0;
+  height: 1px;
+  background: #555;
+  margin: 5px 0;
+}
+
+.title-effect{
+  text-shadow: rgb(242, 242, 242) 1px 1px 6px;
+}
+
+/* Clue and Juice Containers */
+.mh-title-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-items: center;
+}
+
+#mh-sliding-panel .clue-delete,
+#mh-sliding-panel .juice-delete {
+  font-size: 0.65rem;
+  margin-left: 5px;
+}
+
+.clue-container,
+.juice-container {
+  border: 2px solid #555;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+  background-color: #2c2c2c;
+}
+
+/* Item Name inside Containers */
+.clue-container .item-name,
+.juice-container .item-name {
+  flex: row;
+  font-size: 0.95rem;
+  font-weight: bold;
+  font-family: var(--font-family-main2);
+}
+
+/* Item Details inside Containers */
+.clue-container .item-details,
+.juice-container .item-details {
+  margin-left: 2px;
+  font-family: var(--font-family-hud);
+}
+
+.partial-icon {
+  font-size: 12px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.detail-label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #aaa; /* Subtle gray for labels */
+}
+
+.detail-text {
+  font-size: 12px;
+  color: #f0f0f0; /* Standard light text */
+}
+
+.improvements .theme-container {
+  margin-bottom: 1em;
+}
+
+.improvements .improvement-container {
+  border: 2px solid #555;
+  border-radius: 5px;
+  padding: 4px;
+  margin-bottom: 5px;
+  background-color: #2c2c2c;
+}
+
+.improvements .mh-improvement-theme{
+  margin-bottom: 3px;
+}
+
+.improvements .theme-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 3px;
+}
+
+.improvements .item-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start; /* star stays on the first line of a wrapped title */
+  font-weight: bold;
+  font-family: var(--font-family-main2);
+  font-size: 0.85rem;
+}
+
+.improvements .item-description {
+  margin-left: 2px;
+  font-size: 0.85em;
+  color: whitesmoke;
+}
+
+.improvements .item-choice {
+  margin-left: 5px;
+  margin-top: 3px;
+  font-size: 0.85em;
+  color: whitesmoke;
+}
+
+.nascent-upgrade-indicator {
+  margin-right: 5px;
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 4px #ffcc00;
+  }
+  to {
+    text-shadow: 0 0 0px #fff;
+  }
+}
+
+
+
+
+/*Change Numbers in Hotbar*/
+.bm-dialog-body {color: black;}
+.bm-primary-nav__element.svelte-hpna8u {color: rgb(231, 209, 177);}
+
+
+.mh-create-status:hover,
+.mh-create-story-tag:hover{
+	text-shadow: -1px -1px 4px yellow, 1px 1px 4px gold;
+}
+
+/* The scene-tags window (.story-tag-window / .scene-tag-window) and every
+   .item-selection-context belong to the city-of-mist system, which themes them
+   per game. This module no longer restyles them (issues #33, #35). */
+
+/* Roll Bar */
+
+.mh-roll-bar {
+  position: absolute !important;
+  left: -52px !important;
+  /* Flush with the header's bottom edge (offset from .window-content, which
+     sits 3px below the header). */
+  top: -3px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+  background-color: #191919d7 !important;
+  min-width: 45px !important;
+  border-radius: 5px !important;
+  align-items: center !important;
+  overflow: visible !important;
+  z-index: 1000 !important;
+  padding: 6px 0 !important;
+}
+
+.mh-roll-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mh-roll-container.hidden {
+  display: none;
+}
+
+.mh-roll-toggle {
+  margin-top: 10px;
+  width: 35px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mh-roll-toggle i {
+  font-size: 16px;
+}
+
+.mh-roll-toggle:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.mh-roll-button {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 2px;
+  line-height: 1;
+  font-family: 'Rift';
+}
+
+.mh-roll-button.dynamic {
+  max-width: 50px;
+  height: 40px;
+}
+
+.mh-roll-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.mh-roll-main {
+  font-size: 16px;
+}
+
+.mh-roll-main.dynamic {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+.mh-roll-sub {
+  font-size: 16px;
+  color: #d2d2d2;
+  margin-top: 2px;
+}
+
+/* Image buttons */
+.mh-roll-button-img,
+.mh-dynamite-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.mh-roll-button-img:hover {
+  opacity: 1.0;
+  box-shadow: #04e6fb 0px 0px 3px;
+}
+
+.mh-roll-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* Dynamite button */
+.mh-dynamite-toggle:hover {
+  opacity: 1.0;
+  box-shadow: #ff9100 0px 0px 3px;
+  background: none;
+}
+
+.mh-dynamite-toggle.active {
+  opacity: 1.0;
+  box-shadow: #ff4500 0px 0px 8px;
+}
+
+
+/* STATUSES SCREEN*/
+
+#status-screen {
+  background: none !important;
+  display: flex !important;
+  flex-direction: column;
+  border: none;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+  min-width: 300px !important;
+  min-height: 300px;
+  width: max-content;
+  max-width: 75vw;
+  max-height: 80vh;
+  overflow: hidden;
+  border: #374e5c 2px solid;
+  border-radius: 8px;
+} 
+
+#status-screen .window-content {
+  background: none !important;
+  padding: 3px;
+  border: 1px solid var(--mist-border-color);
+}
+
+#status-screen .window-header {
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+
+.status-screen{
+  color: rgb(229, 229, 229);
+  font-size: 1rem;
+  overflow-wrap: break-word;
+  background: rgba(0, 0, 0, 0.8) !important;
+  /* min-width: fit-content;
+  max-height: fit-content; */
+}
+
+.status-tab-content {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 70vh;
+}
+
+.status-screen-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  font-size: 1.2rem;
+  padding: 5px;
+  margin: 5px;
+  gap: 10px;
+  border-bottom: 2px solid #444;
+}
+
+.status-screen-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 5px;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+}
+
+.statuses-screen-title {
+  flex: 1;
+  font-size: 1.6rem;
+  font-family: var(--font-family-main1);
+  font-weight: bold;
+  text-shadow: 1px 1px 1px var(--mythos-dark-color);
+  padding-left: 5px;
+}
+
+.status-screen-header button{
+  font-size: 0.80rem;
+  cursor: pointer;
+  color: rgb(199, 199, 199);
+  margin: auto;
+  white-space: nowrap;
+  max-width: 120px;
+}
+
+.status-tab.active {
+  background: #951b69;
+  border-color: #bb6bd9;
+  font-weight: bold;
+  border: 1px solid #e34ba6;
+}
+
+/* Alternating backgrounds for better readability */
+.status-category-list:nth-child(odd) {
+  background: rgba(30, 30, 30, 0.6); 
+}
+
+.status-category-list:nth-child(even) {
+  background: rgba(60, 60, 60, 0.6); 
+}
+
+/* Alternating backgrounds for better readability */
+.status-group-container:nth-child(odd) {
+  background: rgba(30, 30, 30, 0.6); 
+}
+
+.status-group-container:nth-child(even) {
+  background: rgba(75, 75, 75, 0.6); 
+}
+
+.status-category-list.tab-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  padding: 2px 8px;
+  margin: 3px 10px;
+  border-radius: 4px;
+  transition: background 0.2s ease-in-out;
+  min-height: 28px;
+  gap: 6px;
+  border-radius: 3px;
+  border: #00000000 1px solid;
+}
+
+.status-category-list.tab-content ul {
+  display: flex;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  line-height: 1.2;
+}
+
+.status-category-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 2px 8px;
+  margin: 3px 10px;
+  border-radius: 4px;
+  transition: background 0.2s ease-in-out;
+  min-height: 28px;
+  gap: 6px;
+  border-radius: 3px;
+  border: #00000000 1px solid;
+}
+
+.status-category-list ul {
+  display: flex;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  line-height: 1.2;
+}
+
+.status-group-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: 3px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  border: #00000000 1px solid;
+}
+
+.status-group-container ul {
+  display: flex;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  line-height: 1.2;
+}
+
+.status-tabs {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 6px 10px;
+  gap: 3px;
+}
+
+.status-tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #c1bcbf;
+  line-height: 10px;
+}
+
+.status-tab.active {
+  font-weight: bold;
+}
+
+/* Tooltip is interactive (track boxes are clickable) */
+.mh-tooltip {
+  pointer-events: auto;
+  z-index: 1000;
+}
+
+.mh-tooltip .mh-box[data-track] {
+  cursor: pointer;
+}
+.mh-tooltip .mh-box[data-track]:hover {
+  filter: brightness(1.5);
+}
+
+/* Third track (Legend milestone) */
+.mh-box.milestone {
+  width: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+}
+.mh-box.milestone.active {
+  background: currentColor;
+}
+
+/* Menu styling for the interactive menu */
+.mh-menu {
+  position: absolute;
+  z-index: 1100;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.mh-hud {
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  overflow: visible !important;
+}
+
+/* Fill the window even when the content is shorter than #mist-hud's
+   min-height (e.g. the wide layout), so the tinted background reaches the
+   footer instead of leaving a bare strip. */
+#mist-hud .window-content > .mh-hud {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+#mist-hud,
+.mh-hud {
+  overflow: visible !important;
+}
+
+.mh-content-container {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-bottom: 35px; /* Garante espaço suficiente para o rodapé */
+  position: relative;
+  /* Tags added beyond the window height scroll here. The roll bar and portrait
+     are outside this box, so they are not clipped. */
+  min-height: 0;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+}
+
+.mh-sliding-panel .mh-panel-content {
+  overflow-y: auto;
+}
+
+.mh-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  max-height: 30px;
+}
+
+.scrolling-text {
+  font-weight: bold !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7), 
+               -1px -1px 3px rgba(0, 0, 0, 0.7),
+               1px -1px 3px rgba(0, 0, 0, 0.7),
+               -1px 1px 3px rgba(0, 0, 0, 0.7) !important;
+}
+
+.scrolling-text[style*="rgb(0, 255, 0)"],
+.scrolling-text[style*="#00FF00"] {
+  /* Additional styles for positive status notifications */
+  font-weight: bold !important;
+}
+
+.scrolling-text[style*="rgb(255, 0, 0)"],
+.scrolling-text[style*="#FF0000"] {
+  /* Additional styles for negative status notifications */
+  font-weight: bold !important;
+}
+
+.mh-status-notification {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7), 
+               -1px -1px 3px rgba(0, 0, 0, 0.7),
+               1px -1px 3px rgba(0, 0, 0, 0.7),
+               -1px 1px 3px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Style for move lines with arrow symbols */
+.move-line {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin-bottom: 0.5em;
+}
+
+.scene-tag {
+  border: 2px dashed rgb(251, 238, 153);
+}
+
+/* Make sure arrow symbols stay with their text */
+.move-line > :first-child {
+  margin-right: 0.25em;
+}
+
+/* Status styles */
+.npc-status-moves {
+  display: inline-block;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  margin: 0 2px;
+}
+
+.gm-only-text {
+  color: #ffdb10;
+  font-style: italic;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+/* Tooltip upgrade actions (choose improvement / reset crack) */
+.mh-upgrade-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 0 2px;
+}
+.mh-upgrade-count { font-size: 0.7em; }
+.mh-upgrade-btn {
+  width: auto;
+  height: auto;
+  line-height: 1.2;
+  padding: 1px 6px;
+  font-size: 0.7em;
+  cursor: pointer;
+}
+
+
+/* Theme special star: pinned to the first line of the title */
+.improvements .mh-improvement-star {
+  flex: 0 0 auto;
+  font-size: 0.45rem;
+  margin: 0.45em 3px 0 0;
+}
+
+/* Fading divider (Essence block at the top of the side panel) */
+.panel-divider.mh-fade-divider {
+  height: 1px;
+  margin: 8px 0;
+  background: linear-gradient(to right,
+    transparent, rgba(245, 245, 245, 0.7) 50%, transparent);
+}
+
+/* Essence chart floats; keep it inside its section */
+.section.otherscape {
+  display: flow-root;
+}
+
+/* -- Loadout activation popup --
+   Opens from the Loadout header (appended to <body>). The panel and header
+   live here; the tag ROW layout lives in the system CSS (Otherscape/Legend),
+   which is injected unlayered and would otherwise override it with the HUD's
+   tag grid. */
+.mh-theme-header.loadout {
+  cursor: pointer;
+}
+
+.mh-loadout-popup {
+  position: fixed;
+  z-index: 1000;
+  box-sizing: border-box;
+  width: max-content;
+  min-width: 220px;
+  max-width: 320px;
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 6px 6px;
+  border: 1px solid whitesmoke;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.88);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.mh-loadout-popup .mh-loadout-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 2px 4px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--divider-color1, #555);
+}
+
+.mh-loadout-popup .mh-loadout-popup-title {
+  font-family: var(--font-family-main1);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--text-hud-subtitles-color, #b4b9c0);
+}
+
+.mh-loadout-popup .mh-loadout-create {
+  flex: 0 0 auto;
+  font-size: 0.85rem;
+  color: var(--text-hud-subtitles-color, #b4b9c0);
+  cursor: pointer;
+}
+
+.mh-loadout-popup .mh-loadout-create:hover {
+  color: var(--text-hud-main-color, whitesmoke);
+  text-shadow: none;
+}
+
+.mh-loadout-popup .mh-loadout-choices {
+  margin: 0;
+  padding: 0;
+}
+
+.mh-loadout-empty {
+  list-style: none;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-hud-subtitles-color, #9aa5a8);
+}
+
+.mh-loadout-popup .mh-loadout-popup-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mh-loadout-popup .mh-loadout-edit {
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  color: var(--text-hud-subtitles-color, #b4b9c0);
+  cursor: pointer;
+}
+
+.mh-loadout-popup .mh-loadout-edit:hover,
+.mh-loadout-popup .mh-loadout-edit.active {
+  color: var(--text-hud-main-color, whitesmoke);
+  text-shadow: none;
+}

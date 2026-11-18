@@ -1,0 +1,711 @@
+/* Each NPC HUD window has its own id (npc-hud-<tokenId>), so the frame is
+   matched by class: .application.npc-hud (the inner template div also has
+   .npc-hud, hence the .window-app part). The :is(#npc-hud, ...) form keeps the
+   specificity of the old #npc-hud selectors, so these rules still win over the
+   system's .window-app rules exactly as before. */
+
+/* ApplicationV2 clips its frame; the header portrait floats outside it */
+.application.npc-hud,
+.application.npc-hud .window-header {
+  overflow: visible !important;
+  contain: none !important;
+}
+
+/* Main HUD container */
+:is(#npc-hud, .application.npc-hud) {
+    position: absolute;
+    z-index: 105;
+    border: 1px solid var(--mist-border-color);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: whitesmoke;
+    max-width: fit-content;
+    max-height: 85vh;
+    background-color: var(--npc-hud-bg-prime);
+}
+  
+:is(#npc-hud, .application.npc-hud) .window-app,
+:is(#npc-hud, .application.npc-hud).minimized .window-app {
+  padding: 0;
+  margin: 0;
+  color: #00000000;
+  list-style: none;
+  background: none;
+  border: none;
+  width: fit-content;
+}
+  
+:is(#npc-hud, .application.npc-hud) .app,
+:is(#npc-hud, .application.npc-hud).minimized .app {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    color: #00000000;
+    background: none;
+    border: none;
+    width: 100%;
+}
+
+:is(#npc-hud, .application.npc-hud) ul {
+    padding: 3px;
+    margin: 0;
+    list-style: none;
+    background: none;
+    border: none;
+}
+  
+:is(#npc-hud, .application.npc-hud) .window-header {
+    background: var(--hud-bg-color);
+    display: flex;
+    flex-direction: row;
+    flex-basis: min-content;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(206, 206, 206);
+    cursor: grab;
+    padding-left: 40px;
+    transition: padding-left 0.5s;
+}
+
+  /* Minimized state header */
+  :is(#npc-hud, .application.npc-hud).minimized .window-header {
+    background: var(--hud-bg-color);
+    display: flex;
+    flex-direction: row;
+    flex-basis: max-content;
+    align-items: center;
+    border-bottom: 1px solid rgb(206, 206, 206);
+    cursor: grab;
+    padding-left: 10px;
+    transition: padding-left 0.5s;
+}
+
+/* Character name */
+:is(#npc-hud, .application.npc-hud) .mh-char-name {
+    font-size: 1.1rem;
+    flex: 4;
+    font-family: 'Rift Bold';
+    filter: drop-shadow(2px 2px 2px black);
+    align-self: flex-start;
+    color: var(--spectrum-color);
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+/* Header order: name first, native controls (⋮ / minimize / close) at the right */
+:is(#npc-hud, .application.npc-hud) .window-header .mh-char-name { order: 0; }
+:is(#npc-hud, .application.npc-hud) .window-header .header-control { order: 1; flex: 0 0 auto; color: #fff; }
+
+:is(#npc-hud, .application.npc-hud).minimized .mh-char-name {
+    flex: 4;
+    width: 100%;
+    padding-left: 20px;
+}
+
+:is(#npc-hud, .application.npc-hud).minimized .mh-token-image {
+    top: -13px;
+    transition: ease-in, top, 0.2s;
+}
+
+/* Collapse Buttons */
+:is(#npc-hud, .application.npc-hud) .mh-collapse-button {
+font-size: 1.2rem;
+color: #ffffff;
+cursor: pointer;
+margin-left: auto;
+}
+
+:is(#npc-hud, .application.npc-hud) .mh-collapse-button:hover{
+opacity: 0.8;
+}
+
+/* Close Buttons */
+:is(#npc-hud, .application.npc-hud) .mh-close-button {
+font-size: 1.2rem;
+color: #ffffff;
+cursor: pointer;
+margin: auto;
+text-align: right;
+flex: 1;
+margin-left: 5px;
+}
+
+h4.window-title .mh-close-button {
+    display: none !important; /* Ensure it's completely hidden */
+}
+
+:is(#npc-hud, .application.npc-hud) .mh-close-button:hover {
+opacity: 0.8;
+}
+
+/* Main Content Area */
+:is(#npc-hud, .application.npc-hud) .window-content {
+padding: 0;
+margin: 0;
+list-style: none;
+color: #00000000;
+background: linear-gradient(var(--hud-bg-color), var(--hud-bg-color2));
+border: none;
+max-height: 80vh;
+overflow-y: hidden;
+margin: 5px;
+}
+
+:is(#npc-hud, .application.npc-hud).minimized .window-content {
+    display: none;
+}
+  
+:is(#npc-hud, .application.npc-hud) .mh-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 10px;
+    padding: 5px;
+    color: whitesmoke;
+}  
+  
+
+
+.npc-collapse-button,
+.npc-close-button {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.npc-collapse-button:hover,
+.npc-close-button:hover {
+    opacity: 0.8;
+}
+
+.npc-content {
+    list-style: none;
+    font-family: var(--font-family-hud);
+    padding: 10px;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: whitesmoke;
+    background: linear-gradient(var(--hud-bg-color), var(--hud-bg-color2));
+}
+
+.accordion-content {
+    display: none;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.accordion-content.active {
+    display: block;
+    /* max-height: 500px; */
+}
+
+.accordion-header i.fa-chevron-left {
+    color: var(--text-hud-subtitles-color);
+    font-size: small;
+    padding-right: 5px;
+    transition: transform 0.3s;
+}
+
+.accordion-header i.fa-chevron-left.rotated {
+    padding-right: 5px;
+    transform: rotate(-90deg);
+}
+
+.npc-subtitle-text:hover {
+    opacity: 0.8;
+}
+
+/* Description and Biography Section */
+.npc-description-biography {
+    max-height: calc(80vh * 0.2); /* Maximum 20% of the HUD's total height */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds max height */
+}
+
+/* Main Moves Section */
+.npc-moves-section {
+    max-height: calc(80vh - 40vh);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    /* border-top: 1px solid var(--divider-color1); */
+    padding-top: 5px;
+}
+
+/* Title Styling (Fixed at the top of the section) */
+.npc-moves-title {
+    flex-shrink: 0; /* Prevent shrinking when content overflows */
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--text-hud-subtitles-color);
+    padding: 10px;
+    border-bottom: 1px solid var(--divider-color1); /* Optional separator line */
+}
+
+.npc-moves-title-text {
+    font-family: var(--font-family-main1);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Scrollable content */
+.npc-moves-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 3px;
+}
+
+/* Each Move Type Container */
+.npc-move-type {
+    margin-bottom: 20px; /* Spacing between move types */
+}
+
+/* Subtitle for Each Move Type */
+.npc-move-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-hud-subtitles-color);
+    text-transform: capitalize;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Move List */
+.npc-move-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Individual Move Styling */
+.npc-move-list li {
+    margin-bottom: 8px; /* Spacing between moves */
+}
+
+.npc-move-name {
+    font-family: var(--font-family-npcmoves);
+    font-style: italic;
+    font-weight: bold;
+}
+
+.npc-move-name.limit:before {
+    content: '';
+    display: inline-block;
+    width: 25px;
+    height: 14px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../ui/icons/limit_icn.svg");
+}
+
+.npc-move-description {
+    font-family: var(--font-family-npcmoves);
+    color: var(--text-hud-description-color);
+}
+
+.npc-subtitle-container-r {
+    display: flex;
+    flex: auto;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px; 
+    margin: 1px 0; 
+    opacity: 0.75;
+    color:  var(--text-hud-subtitles-color);
+}
+
+.npc-subtitle-container-r::before {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background-color: var(--text-hud-subtitles-color);
+}
+
+.npc-subtitle-container-l {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px; 
+    margin: 1px 0; 
+    opacity: 0.75;
+    color: var(--text-hud-subtitles-color);
+    font-size: larger;
+}
+
+.npc-subtitle-container-l::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background-color:  var(--text-hud-subtitles-color);
+}
+
+.npc-subtitle-container-c {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    gap: 8px; 
+    margin: 1px 0; 
+    opacity: 0.75;
+    color: var(--text-hud-subtitles-color);
+    font-weight: bold;
+    font-size: large;
+    flex: auto;
+}
+
+.npc-subtitle-container-c::before {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background-color: var(--text-hud-subtitles-color);
+}
+
+.npc-subtitle-container-c::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background-color:  var(--text-hud-subtitles-color);
+}
+
+.mh-npc-influence {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 3px;
+    margin: 5px;
+    color: var(--spectrum-color);
+    font-size: 1rem;
+    z-index: 10;
+    width: fit-content;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+.npc-subtitle-text {
+    text-transform: uppercase;
+    font-family: var(--font-family-main1);
+    color: var(--text-hud-subtitles-color);
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.create-npc-status i,
+.create-npc-tag i{
+    opacity: 0.8;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.create-npc-status:hover i,
+.create-npc-tag:hover i{
+    opacity: 1;
+    color: var(--effects-color2);
+    text-shadow: 0px 0px 1px var(--effects-color2);
+    cursor: pointer;
+}
+
+
+.centered {
+    text-align: center;
+}
+
+.npc-list{
+    list-style: none;
+    padding: 0;
+}
+
+.no-wrap{
+    white-space: nowrap; /* Prevents line breaks inside the list item */
+    overflow: hidden; /* Hides overflowing content */
+    text-overflow: ellipsis; /* Adds ellipsis (...) to overflowing text */
+}
+
+.npc-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.npc-list li {
+    padding: 3px 0;
+}
+
+.npc-list li:not(:last-child) {
+    border-bottom: 2px solid var(--divider-color1);
+}
+
+.npc-list.limit{
+    list-style: none;
+    padding: 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.npc-spectrum-list{
+    display: flex ;
+    justify-content: space-around;
+    gap: 10px 5px;
+    flex-wrap: wrap;
+    margin-bottom: 10px !important;
+}
+
+.npc-spectrum {
+    padding: 4px 5px;
+    background-color: var(--spectrum-color);
+    color: black;
+    font-family: var(--font-family-main1);
+    font-weight: bold;
+    font-size: 0.85rem;
+    clip-path: polygon(
+        0 0,         /* Top-left corner */
+        100% 0,        /* Top-right corner */
+        100% 100%,     /* Bottom-right corner */
+        10px 100%,      /* Bottom chamfered section */
+        0 20px          /* Bottom-left corner (chamfered) */
+    );
+}
+
+.npc-spectrum-tier{
+    font-size: 1.1rem;
+    padding: 4px 0px;
+}
+
+.npc-limit-moves {
+    font-family: var(--font-family-npcmoves);
+    background-color: var(--spectrum-color);
+    color: black;
+    text-transform: lowercase;
+    font-style: oblique;
+    padding: 0px 2px ;
+    font-weight: bold;
+}
+
+.npc-story-tag,
+.npc-story-tag-moves {
+    font-family: var(--font-family-npcmoves);
+    background-color: var(--storytag-color);
+    color: var(--storytag-text-color);
+    text-transform: lowercase;
+    font-style: oblique;
+    padding: 0px 2px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-block; 
+}
+
+.npc-story-tag:active,
+.npc-story-tag.neutral:active,
+.npc-story-tag-moves:active {
+    cursor: grabbing;
+}
+
+.npc-status-moves:hover,
+.npc-story-tag-moves:hover {
+    cursor: grab;
+}
+
+.npc-status,
+.npc-status.neutral,
+.npc-status-moves {
+    font-family: var(--font-family-npcmoves);
+    background-color: var(--status-color);
+    text-transform: lowercase;
+    font-style: oblique;
+    padding: 0px 2px ;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-block;
+    color: var(--text-status-color);
+}
+
+.npc-status:active,
+.npc-status.neutral:active,
+.npc-status-moves:active {
+    cursor: grabbing;
+}
+
+.npc-status:hover,
+.npc-status-moves:hover {
+    text-shadow: 0 0 2px #fff;
+}
+
+.npc-status.positive,
+.npc-story-tag.positive {
+    border: 2px solid var(--positive-tag-borderColor);
+    border-radius: 3px;
+    margin: -2px;
+}
+
+.npc-status.negative,
+.npc-story-tag.negative {
+    border: 2px solid var(--negative-tag-borderColor);
+    border-radius: 3px;
+    margin: -2px;
+}
+
+.npc-story-tag.burned,
+.npc-status.burned {
+    opacity: 0.8;
+    color: var(--burned-text-color);
+    background-color: var(--destroyed-tag-color);
+    text-decoration-line: line-through !important;
+    text-decoration-color: var(--destroyed-tag-color);
+    text-decoration-thickness: 2px;
+}
+
+.npc-tag-name {
+    display: inline-block;
+}
+
+/* Container for Tags & Statuses */
+.npc-tags-statuses-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 3px;
+    max-width: 100%;
+    overflow: visible; 
+}
+
+.mh-npc-influence.positive {
+    color: #4caf50;
+    border-color: #4caf50;
+}
+
+.mh-npc-influence.negative {
+    color: #f44336;
+    border-color: #f44336;
+}
+
+
+/* Tags & Statuses Items */
+.npc-storytags-list,
+.npc-statuses-list {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 4px 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Responsive Behavior */
+.npc-tags-statuses-container li {
+    flex: 1; 
+    text-align: center;
+}
+
+/* Arrow Marker Styling */
+.npc-tc-marker {
+    color: var(--spectrum-color);
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1rem;
+}
+
+/* Threat Container Styling */
+.npc-threat {
+    font-family: var(--font-family-npcmoves);
+    color: white;
+    font-size: 1.0rem;
+    font-style: italic;
+    margin-bottom: 1px;
+    line-height: 1.2rem;
+    display: block;
+    position: relative;
+    padding-left: 0.65em; 
+}
+
+/* Position the single arrow marker */
+.npc-threat > .npc-tc-marker {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* Threat description formatting */
+.npc-threat-description p {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    display: inline;
+}
+
+/* List formatting within threats */
+:is(#npc-hud, .application.npc-hud) .npc-threat ul {
+    margin-left: -3px;
+}
+
+/* List item layout within threats */
+.npc-threat ul li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.3em;
+    margin-left: -4px;
+}
+
+/* Double arrow markers in list items */
+.npc-threat ul li .npc-tc-marker {
+    flex-shrink: 0;
+    margin-right: 2px;
+}
+
+/* Move description in list items */
+.npc-threat ul li .npc-move-description {
+    flex: 1;
+}
+
+/* Remove margins from paragraphs in move descriptions */
+.npc-move-description p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Consequence styling */
+.npc-consequence {
+    font-family: var(--font-family-npcmoves);
+    color: whitesmoke;
+    font-size: 1.0rem;
+    font-style: normal;
+    padding-left: 5px;
+    margin-bottom: 1px;
+    line-height: 1.2rem;
+}
+
+
+.npc-collective-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    color: var(--spectrum-color);
+    width: 100%;
+    font-size: 0.85rem;
+}
+
+.npc-collective-segment{
+    cursor: pointer;
+}
+
+.npc-collective-container::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background-color:  var(--spectrum-color);
+}
+
+.npc-collective-label {
+    font-family: var(--font-family-main1);
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+

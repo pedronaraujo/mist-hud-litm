@@ -1,0 +1,40 @@
+<div class="theme-container-{{category}} mhl-theme" data-theme-id="{{id}}">
+  <div class="mh-theme-header {{category}}">
+    <span class="mh-theme-icon {{category}}" data-theme-id="{{id}}" data-source="{{source}}"></span>
+    <span class="mh-theme-name mh-theme-name-com-{{category}}">
+      {{name}}
+      {{#if readyToImprove}}
+        <span class="mh-improvement-marker {{category}}" data-tooltip="{{localize "MistHUD.hud.readyToImprove"}}"><i class="fa-solid fa-star"></i></span>
+      {{/if}}
+    </span>
+  </div>
+
+  <ul class="mh-tags">
+    {{#each powerTags}}
+      <li class="mh-power-tag {{burnState}} {{../category}} {{#if isTitle}}mh-title-tag{{/if}} {{#if selected}}selected{{/if}} {{#if inverted}}inverted mhl-inverted-power{{/if}}"
+          data-source="{{../source}}" data-doc-id="{{../id}}" data-kind="p" data-index="{{index}}"
+          data-drag-type="tag" data-name="{{name}}">
+        {{#if canBurn}}
+          <div class="mh-burn-toggle burn-icon {{burnState}} {{../category}}"></div>
+        {{else}}
+          <div class="mh-burn-toggle burn-icon {{burnState}} Crew" data-tooltip="{{localize "MistHUD.hud.scratch"}}"></div>
+        {{/if}}
+        <div class="mh-tag-text {{../category}}">{{name}}</div>
+        <span></span>
+      </li>
+    {{/each}}
+  </ul>
+
+  <ul class="mh-tags">
+    {{#each weaknessTags}}
+      <li class="mh-weakness-tag {{#if inverted}}inverted{{/if}} {{#if selected}}selected{{/if}}"
+          data-source="{{../source}}" data-doc-id="{{../id}}" data-kind="w" data-index="{{index}}"
+          data-drag-type="weakness" data-name="{{name}}">
+        <span class="mh-weakness-toggle clickable" data-key="{{key}}" data-tooltip="{{localize "MistHUD.hud.invertWeakness"}}">
+          {{#if inverted}}<i class="fa-light fa-angles-up"></i>{{else}}<i class="fa-light fa-angles-down"></i>{{/if}}
+        </span>
+        <span class="mh-tag-text">{{name}}</span>
+      </li>
+    {{/each}}
+  </ul>
+</div>
