@@ -95,6 +95,14 @@
       "keyToggle": {
         "name": "Abrir / fechar o HUD do herói",
         "hint": "Abre o HUD do token selecionado, ou do seu personagem."
+      },
+      "acornDice": {
+        "name": "Dados-bolota (Dice So Nice)",
+        "hint": "Registra o d6-bolota como conjunto de dados do Dice So Nice. Cada jogador pode escolhê-lo nas configurações do Dice So Nice."
+      },
+      "acornDiceDefault": {
+        "name": "Dados-bolota como aparência padrão",
+        "hint": "Jogadores novos começam com o d6-bolota nos dados comuns. Quem já salvou as configurações do Dice So Nice mantém a própria escolha."
       }
     },
     "notify": {
@@ -104,6 +112,9 @@
       "noGM": "Mist HUD: é preciso um Narrador conectado para isso.",
       "noHero": "Mist HUD: selecione um token de herói ou atribua um personagem ao seu usuário.",
       "dropped": "{what} adicionado a {who}."
+    },
+    "dice": {
+      "systemName": "Legend in the Mist — Bolotas"
     }
   }
 }

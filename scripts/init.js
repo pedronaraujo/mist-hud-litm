@@ -8,6 +8,7 @@ import { heroHudRegistry, openHeroHud, closeHeroHuds } from "./player-hud.js";
 import { npcHudRegistry, openChallengeHud } from "./npc-hud.js";
 import { registerSocket, addFloating, relayToGM } from "./actions.js";
 import { fellowshipThemecard } from "./data.js";
+import { registerDiceSettings, registerAcornDice } from "./dice.js";
 
 const active = () => game.system?.id === SYSTEM_ID;
 
@@ -38,6 +39,7 @@ function onInit() {
   reg(SETTINGS.WIDE_LAYOUT, { scope: "client", config: false, type: Boolean, default: false });
   reg(SETTINGS.NPC_COLLAPSED, { scope: "client", config: false, type: Boolean, default: false });
   reg(SETTINGS.HUD_POSITION, { scope: "client", config: false, type: Object, default: {} });
+  registerDiceSettings();
 
   Handlebars.registerHelper("times", function (n, block) {
     let out = "";
@@ -180,6 +182,9 @@ function registerHooks() {
 function boot() {
   if (!active()) return;
   registerHooks();
+  // Acorn dice for Dice So Nice (registered when Dice So Nice is ready)
+  if (game.dice3d && game.ready) Promise.resolve().then(() => registerAcornDice(game.dice3d));
+  else Hooks.once("diceSoNiceReady", registerAcornDice);
   if (game.ready) { onInit(); onReady(); }
   else {
     Hooks.once("init", onInit);
@@ -188,4 +193,10 @@ function boot() {
 }
 
 if (globalThis.game?.system) boot();
-else Hooks.once("init", () => { if (active()) { registerHooks(); onInit(); Hooks.once("ready", onReady); } });
+else Hooks.once("init", () => {
+  if (!active()) return;
+  registerHooks();
+  Hooks.once("diceSoNiceReady", registerAcornDice);
+  onInit();
+  Hooks.once("ready", onReady);
+});
