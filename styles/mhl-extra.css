@@ -138,3 +138,8 @@
 .mhl-npc .npc-status.selected { outline: 2px solid var(--roll-shadow-color); outline-offset: 1px; }
 .mhl-npc .npc-story-tag { cursor: pointer; }
 .mhl-npc mark.draggable { cursor: grab; }
+
+/* Side panel is dark: lighten the scratch icons and the companion name */
+.mhl-hud .mh-sliding-panel .burn-icon { filter: invert(0.85) sepia(0.3); }
+.mhl-hud .mh-sliding-panel .mh-relationship-who { color: var(--toBurn-text-color); }
+.mhl-hud .mh-sliding-panel .mh-relationship-tag:not(.selected) .mh-tag-text { color: var(--light-color); }
