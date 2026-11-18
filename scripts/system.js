@@ -20,7 +20,9 @@ const failures = [];
 
 export const systemReady = Promise.all(Object.entries(FILES).map(async ([name, file]) => {
   try {
-    const mod = await import(foundry.utils.getRoute(`systems/mist-engine-fvtt/${file}`));
+    // absolute URL: also resolves when this file is not served from the module folder
+    const url = new URL(foundry.utils.getRoute(`systems/mist-engine-fvtt/${file}`), window.location.origin).href;
+    const mod = await import(url);
     if (!mod[name]) throw new Error(`${file} has no export named ${name}`);
     sys[name] = mod[name];
   } catch (e) {
