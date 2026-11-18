@@ -132,16 +132,13 @@
       <div id="mh-mod-decrease" class="mh-mod-button">-</div>
       <input type="text" id="mh-mod-value" value="{{modifier}}" />
       <div id="mh-mod-increase" class="mh-mod-button">+</div>
+      {{#if mightEnabled}}
+        <select class="mhl-might-select" data-tooltip="{{localize "MistHUD.hud.might"}}">
+          {{#each mightOptions}}<option value="{{value}}" {{#if checked}}selected{{/if}}>{{localize "MistHUD.hud.might"}} {{label}}</option>{{/each}}
+        </select>
+      {{/if}}
       <span class="mh-power-indicator"></span>
     </div>
-    {{#if mightEnabled}}
-    <div class="mhl-might">
-      <span class="mhl-might-label">{{localize "MistHUD.hud.might"}}</span>
-      {{#each mightOptions}}
-        <label><input type="radio" name="mhl-might" value="{{value}}" {{#if checked}}checked{{/if}}>{{label}}</label>
-      {{/each}}
-    </div>
-    {{/if}}
   </div>
 
   {{!-- ── Sliding Panel ── --}}

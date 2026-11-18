@@ -356,9 +356,8 @@ export class PlayerHUD extends HandlebarsApplicationMixin(ApplicationV2) {
     root.querySelector("#mh-mod-decrease")?.addEventListener("click", () => set(state.modifier - 1));
     root.querySelector("#mh-mod-increase")?.addEventListener("click", () => set(state.modifier + 1));
     input?.addEventListener("change", () => set(parseInt(input.value) || 0));
-    root.querySelectorAll(".mhl-might input[type=radio]").forEach(r => r.addEventListener("change", () => {
-      if (r.checked) { state.might = parseInt(r.value) || 0; this.updatePower(); }
-    }));
+    const might = root.querySelector(".mhl-might-select");
+    might?.addEventListener("change", () => { state.might = parseInt(might.value) || 0; this.updatePower(); });
   }
 
   /** Refresh the Power preview without a full re-render. */
@@ -370,7 +369,7 @@ export class PlayerHUD extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!p) { el.textContent = ""; return; }
     el.textContent = L("hud.power", { power: p.power });
     el.dataset.tooltip = L("hud.powerTooltip", { positive: p.positive, negative: p.negative, modifier: state.modifier + state.might });
-    el.classList.toggle("mhl-power-low", p.raw < 1);
+    el.classList.toggle("mhl-power-low", p.raw < 0);
   }
 
   // ── Side panel ───────────────────────────────────────────────────────────

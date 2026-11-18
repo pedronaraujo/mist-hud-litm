@@ -190,14 +190,28 @@ export async function setTrack(actor, source, docId, track, boxIndex) {
 
 const FTS = "system.floatingTagsAndStatuses";
 
-/** Owner writes directly; anyone else asks the active GM over the socket. */
+/**
+ * Floating tag/status changes are read-modify-write of one array: queue them
+ * per actor so two quick changes (two drops, a click during an update) do not
+ * overwrite each other.
+ */
+const queues = new Map();
+function queued(actor, task) {
+  const key = actor.uuid;
+  const prev = queues.get(key) ?? Promise.resolve();
+  const next = prev.then(task, task);
+  queues.set(key, next.catch(() => {}));
+  return next;
+}
+
+/** Owner writes directly (the GM relay uses the same queue). */
 async function writeFloating(actor, fn) {
-  if (actor.isOwner) {
+  if (!actor.isOwner) return false;
+  return queued(actor, async () => {
     const next = fn(clone(actor.system.floatingTagsAndStatuses));
     if (next) await actor.update({ [FTS]: next });
     return true;
-  }
-  return false;
+  });
 }
 
 export async function toggleFloatingSelected(actor, index) {
@@ -278,7 +292,7 @@ export function addParsedToList(list, text, { forceStatus = false, positive } = 
 export async function addFloating(actor, text, opts = {}) {
   if (!text?.trim()) return;
   if (actor.isOwner) {
-    await actor.update({ [FTS]: addParsedToList(clone(actor.system.floatingTagsAndStatuses), text, opts) });
+    await writeFloating(actor, list => addParsedToList(list, text, opts));
   } else {
     relayToGM("addFloating", { actorUuid: actor.uuid, text, opts });
   }
@@ -304,7 +318,7 @@ export function registerSocket() {
         const text = String(data.text ?? "").slice(0, 120);
         const opts = { forceStatus: !!data.opts?.forceStatus };
         if (data.opts?.positive !== undefined) opts.positive = !!data.opts.positive;
-        await actor.update({ [FTS]: addParsedToList(clone(actor.system.floatingTagsAndStatuses), text, opts) });
+        await writeFloating(actor, list => addParsedToList(list, text, opts));
       }
     } catch (e) {
       console.error(`${MODULE_ID} | relayed action failed`, e);

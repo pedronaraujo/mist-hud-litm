@@ -8,30 +8,28 @@
   white-space: nowrap;
 }
 
-/* ── Power preview ─────────────────────────────────────────────────────── */
+/* ── Footer: modifier, Might, Power preview ───────────────────────────── */
+.mhl-hud .mh-modifier-bar { gap: 4px; }
 .mhl-hud .mh-power-indicator {
   margin-left: auto;
-  padding: 0 8px;
+  padding: 0 4px;
   font-family: var(--font-family-titles);
-  font-size: 1.15rem;
-  color: var(--text-hud-main-color);
+  font-size: 1.05rem;
+  color: var(--toBurn-text-color);
   white-space: nowrap;
+  cursor: help;
 }
-.mhl-hud .mh-power-indicator.mhl-power-low { color: var(--burned-text-color); }
-
-/* ── Might selector ───────────────────────────────────────────────────── */
-.mhl-might {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 8px 4px;
-  font-family: var(--font-family-main1);
-  color: var(--text-hud-main-color);
-  font-size: 0.85rem;
+.mhl-hud .mh-power-indicator.mhl-power-low { color: var(--adventure-light-color); }
+.mhl-hud .mhl-might-select {
+  height: 20px;
+  width: auto;
+  max-width: 92px;
+  padding: 0 2px;
+  font-size: 0.75rem;
+  background: #333;
+  color: #eee;
+  border: 1px solid #555;
 }
-.mhl-might label { display: flex; align-items: center; gap: 2px; cursor: pointer; }
-.mhl-might input { margin: 0; }
-.mhl-might-label { font-family: var(--font-family-titles); margin-right: 2px; }
 
 /* ── Overcome banner ──────────────────────────────────────────────────── */
 .mhl-overcome-banner {
@@ -88,12 +86,12 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  margin: 4px 2px;
-  color: var(--text-hud-main-color);
+  margin: 6px 2px;
+  color: var(--light-color);
 }
 .mhl-promises-label { font-family: var(--font-family-titles); margin-right: 4px; }
 .mhl-promises .mh-promise { cursor: pointer; }
-.mhl-promises .mh-promise.active { color: var(--effects-color3); }
+.mhl-promises .mh-promise.active { color: var(--toBurn-text-color); }
 
 /* ── Theme tooltip ────────────────────────────────────────────────────── */
 .mhl-tooltip {
